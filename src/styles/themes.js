@@ -4,7 +4,7 @@ const THEMES = [
         primary: 'rgba(96, 102, 208, 0.7)',
         success: '#60BF88',
         warning: '#F9A826',
-        danger: '#D32F2F',
+        danger: '#EA8282',
 
         font: {
             color: {

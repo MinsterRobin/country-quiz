@@ -5,6 +5,7 @@ import {P} from "../atoms/Typography";
 import styled, {useTheme} from "styled-components";
 import {ReactComponent as UndrawAdventure} from "../../assets/undraw_adventure_4hum 1.svg";
 import Separator from "../atoms/Separator";
+import NextButton from "../molecules/NextButton";
 
 const MainContainer = styled.div`
     display: flex;
@@ -25,7 +26,7 @@ const QuizContainer = styled.div`
     flex-direction: column;
     padding: 68px 32px;
     
-    svg {
+    > svg {
         position: absolute;
         top: -75px;
         right: 0;    
@@ -48,14 +49,15 @@ const CountryQuiz = () => {
                 <UndrawAdventure/>
                 <P size={"l"} weight={"700"} family={"primary"} color={theme.font.color.secondary}>Kuala Lumpur is the capital of</P>
                 <AnswersLayout>
-                    <AnswerButton Letter={"A"} Content={"Malasia"}/>
+                    <AnswerButton Letter={"A"} Content={"Malasia"} State={"success"}/>
                     <Separator height={"25px"}/>
-                    <AnswerButton Letter={"A"} Content={"Malasia"}/>
+                    <AnswerButton Letter={"A"} Content={"Malasia"} State={"wrong"}/>
                     <Separator height={"25px"}/>
                     <AnswerButton Letter={"A"} Content={"Malasia"}/>
                     <Separator height={"25px"}/>
                     <AnswerButton Letter={"A"} Content={"Malasia"}/>
                 </AnswersLayout>
+                <NextButton/>
             </QuizContainer>
         </MainContainer>
     )

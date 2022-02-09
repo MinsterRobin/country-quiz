@@ -1,21 +1,37 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import PropTypes from "prop-types";
 import React from "react";
 
 const Button = styled.button`
-    content: "lalalal";
     width: 100%;
-    min-width: max-content;
     border-radius: 12px;
-    background-color: transparent;
-    color: ${props => props.theme.primary};
-    border: 2px solid ${props => props.theme.primary};
+    background-color: ${props => props.variant === "outline" ? "transparent" : props.color};
+    color: ${props => props.variant === "outline" ? 
+        (props.color  ? 
+            props.color : 
+            props.font.default) :
+        props.theme.font.color.default          
+    };
+    border: 2px solid ${props => props.color};
     
-    &:hover {
-        color: ${props => props.theme.font.color.default};
-        border: 2px solid ${props => props.theme.warning};
-        background-color: ${props => props.theme.warning};
+    ${props => !props.noShadow && css`
+        box-shadow: 0 2px 4px ${props => props.color};
+    `}    
+    
+    ${props => !props.disabled && css`    
+        &:hover,&:focus{
+            color: ${props => props.theme.font.color.default};
+            border: 2px solid ${props => props.theme.warning};
+            background-color: ${props => props.theme.warning};            
+        }`
     }
 `;
 
-export default Button
+Button.propTypes = {
+    variant: PropTypes.oneOf(["text", "outline"]),
+    color: PropTypes.string,
+    disabled: PropTypes.bool,
+    noShadow: PropTypes.bool
+};
+
+export default Button;
