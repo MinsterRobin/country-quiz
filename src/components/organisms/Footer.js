@@ -10,8 +10,8 @@ const FooterLayout = styled.footer`
     align-items: center;
     
     p {
-        color: var(--color-text-gray-4);
-        font-family: var(--font-family-primary);
+        color: ${props => props.theme.font.color.default};
+        font-family: ${props => props.theme.font.family.secondary};
         font-size: 14px;
         font-weight: 500;
         text-align: center;

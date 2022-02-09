@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12effd4c-0355-46c4-81cb-c1660f366426" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/background.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/organisms/Footer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/atoms/Button.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/molecules/AnswerButton.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/organisms/CountryQuiz.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/atoms/Typography.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/atoms/Typography.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/organisms/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/organisms/Footer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/templates/CountryQuizViewTemplate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/templates/CountryQuizViewTemplate.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/CountryQuizView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/CountryQuizView.js" afterDir="false" />
     </list>
@@ -87,7 +90,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1644417226826</updated>
-      <workItem from="1644417229132" duration="3772000" />
+      <workItem from="1644417229132" duration="8471000" />
     </task>
     <task id="LOCAL-00001" summary="Init commit">
       <created>1644419318421</created>
@@ -96,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644419318421</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="+ CountryQuizViewTemplate.js">
+      <created>1644421109167</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1644421109167</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -104,17 +114,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Init commit" />
+    <MESSAGE value="+ CountryQuizViewTemplate.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="+ CountryQuizViewTemplate.js" />
   </component>
   <component name="WindowStateProjectService">
     <state x="755" y="324" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1644417768615">
       <screen x="0" y="0" width="2048" height="1152" />
     </state>
     <state x="755" y="324" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2048.1152/-1920.243.1920.1080/2560.243.1920.1080@0.0.2048.1152" timestamp="1644417768615" />
-    <state x="618" y="171" key="CommitChangelistDialog2" timestamp="1644419317755">
+    <state x="618" y="171" key="CommitChangelistDialog2" timestamp="1644421108538">
       <screen x="0" y="0" width="2048" height="1152" />
     </state>
-    <state x="618" y="171" key="CommitChangelistDialog2/0.0.2048.1152/-1920.243.1920.1080/2560.243.1920.1080@0.0.2048.1152" timestamp="1644419317755" />
+    <state x="618" y="171" key="CommitChangelistDialog2/0.0.2048.1152/-1920.243.1920.1080/2560.243.1920.1080@0.0.2048.1152" timestamp="1644421108538" />
     <state width="2027" height="201" key="GridCell.Tab.0.bottom" timestamp="1644419195049">
       <screen x="0" y="0" width="2048" height="1152" />
     </state>
@@ -179,9 +190,9 @@
       <screen x="0" y="0" width="2048" height="1152" />
     </state>
     <state width="2027" height="201" key="GridCell.Tab.3.right/0.0.2048.1152/-1920.243.1920.1080/2560.243.1920.1080@0.0.2048.1152" timestamp="1644419195049" />
-    <state x="617" y="298" key="Vcs.Push.Dialog.v2" timestamp="1644419357979">
+    <state x="617" y="298" key="Vcs.Push.Dialog.v2" timestamp="1644421110453">
       <screen x="0" y="0" width="2048" height="1152" />
     </state>
-    <state x="617" y="298" key="Vcs.Push.Dialog.v2/0.0.2048.1152/-1920.243.1920.1080/2560.243.1920.1080@0.0.2048.1152" timestamp="1644419357979" />
+    <state x="617" y="298" key="Vcs.Push.Dialog.v2/0.0.2048.1152/-1920.243.1920.1080/2560.243.1920.1080@0.0.2048.1152" timestamp="1644421110453" />
   </component>
 </project>

@@ -10,7 +10,8 @@ const Layout = styled.div`
     margin: auto;
     min-height: 100vh;
     min-width: 320px;
-    max-width: 1024px;
+    width: 100%;
+    max-width: 1440px;
     padding: var(--padding-size);  
 `;
 

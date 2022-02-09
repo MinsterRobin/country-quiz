@@ -13,9 +13,9 @@ const P = styled.p`
 `;
 
 P.propTypes = {
-    size: PropTypes.oneOf(['tiny','very_small','small','regular','medium','large','very_large']).isRequired,
-    mobileSize: PropTypes.oneOf(['tiny','very_small','small','regular','medium','large','very_large']),
-    weight: PropTypes.oneOf(['400','500','600','700','800']).isRequired,
+    size: PropTypes.oneOf(['xxs','xs','s','r','l','xl','xxl']).isRequired,
+    mobileSize: PropTypes.oneOf(['xxs','xs','s','r','l','xl','xxl']),
+    weight: PropTypes.oneOf(['400','500','600','700']).isRequired,
     family: PropTypes.oneOf(["primary", "secondary"]).isRequired,
     color: PropTypes.string,
     data: PropTypes.string,
