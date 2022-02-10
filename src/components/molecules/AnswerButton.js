@@ -26,11 +26,12 @@ const ButtonContentSubLayout = styled.div`
     align-items: center;
 `;
 
-const AnswerButton = ({Letter, Content, State}) => {
+const AnswerButton = ({Letter, Content, State, onClick}) => {
     const theme = useTheme();
 
     return(
         <Button
+            onClick={onClick}
             color={!State ? theme.primary : (State === "success" ? theme.success : theme.danger)}
             variant={!State && "outline"}
             disabled={!!State}
@@ -55,7 +56,8 @@ const AnswerButton = ({Letter, Content, State}) => {
 AnswerButton.propTypes = {
     Letter: PropTypes.string.isRequired,
     Content: PropTypes.string.isRequired,
-    State: PropTypes.oneOf(["success", "wrong"])
+    State: PropTypes.oneOf(["success", "wrong"]),
+    onClick: PropTypes.func
 };
 
 export default AnswerButton;

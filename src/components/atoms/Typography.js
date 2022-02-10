@@ -2,6 +2,7 @@ import styled from "styled-components";
 import PropTypes from 'prop-types';
 
 const P = styled.p`
+display: inline;
     font-family: ${props => props.theme.font.family[props.family]}, "sans-serif";
     font-size: ${props => props.theme.font[props.size]};
     font-weight: ${props => props.weight};

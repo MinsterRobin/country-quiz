@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import React from "react";
 
 const Button = styled.button`
+    cursor: pointer;
+    padding: ${props => props.padding ? props.padding : "inital"};
+    max-width: ${props => props.maxWidth ? props.maxWidth : "inherit"};
     width: 100%;
     border-radius: 12px;
     background-color: ${props => props.variant === "outline" ? "transparent" : props.color};
@@ -31,7 +34,10 @@ Button.propTypes = {
     variant: PropTypes.oneOf(["text", "outline"]),
     color: PropTypes.string,
     disabled: PropTypes.bool,
-    noShadow: PropTypes.bool
+    noShadow: PropTypes.bool,
+    padding: PropTypes.string,
+    maxWidth: PropTypes.string,
+    width: PropTypes.string
 };
 
 export default Button;

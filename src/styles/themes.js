@@ -11,6 +11,7 @@ const THEMES = [
                 default: '#ffffff',
                 primary: '#F2F2F2',
                 secondary: '#2F527B',
+                tertiary: '#1D355D'
             },
             family: {
                 primary: 'Poppins',
