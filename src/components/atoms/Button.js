@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import React from "react";
 
 const Button = styled.button`
-    cursor: pointer;
+    cursor: ${props => !props.disabled && "pointer"};
     padding: ${props => props.padding ? props.padding : "inital"};
     max-width: ${props => props.maxWidth ? props.maxWidth : "inherit"};
     width: 100%;

@@ -1,5 +1,5 @@
 import Button from "../atoms/Button";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import AnswerButton from "../molecules/AnswerButton";
 import {P} from "../atoms/Typography";
 import styled, {useTheme} from "styled-components";
@@ -8,6 +8,7 @@ import {ReactComponent as UndrawWinners} from "../../assets/undraw_winners_ao2o 
 import Separator from "../atoms/Separator";
 import NextButton from "../molecules/NextButton";
 import FlexContainer from "../atoms/Container";
+import getRandomInt from "../../utils/getRandomInt";
 
 const MainContainer = styled.div`
     display: flex;
@@ -39,12 +40,6 @@ const QuizContainer = styled.div`
     }
 `;
 
-const Placeholder = styled.div`
-    height: 54px;
-    width:  84px;
-    background-color: red;
-`;
-
 const ResultsLayout = styled.div`
     display: flex;
     height: 100%;
@@ -55,74 +50,193 @@ const ResultsLayout = styled.div`
     padding: 49px 32px 33px;
 `;
 
-const AnswersLayout = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+const Flag = styled.img`
+    width: 84px;
+    height: 54px;
 `;
 
 const CountryQuiz = () => {
     const theme = useTheme();
     const [gameOver, setGameOver] = useState(false);
-    const [isFlagQuestion, setIsFlagQuestion] = useState(true);
+    const [points, setPoints] = useState(0);
+
+    const [error, setError] = useState(null);
+    const [euCountryData, setEuCountryData] = useState(null);
+    const [isLoadingData, setIsLoadingData] = useState(true);
+    const [isPreparingQuestion, setIsPreparingQuestion] = useState(true);
+    const [showAnswer, setShowAnswer] = useState(false);
+    const [selectedProposition, setSelectedProposition] = useState(null);
+    const [showResults, setShowResults] = useState(false);
+
+    const [question, setQuestion] = useState(null);
+
+    const setupQuestion = () => {
+        setShowAnswer(false);
+        let isFlagQuestion = getRandomInt(2) === 0;
+        let question = {};
+
+        let propositions = [];
+        for (let i = 0; i  <= 3; i++) {
+            let letter = "";
+            switch (i) {
+                case 0:
+                    letter = "A";
+                    break;
+                case 1:
+                    letter = "B";
+                    break;
+                case 2:
+                    letter = "C";
+                    break;
+                case 3:
+                    letter = "D";
+                    break;
+            }
+
+            let randomId = getRandomInt(52);
+            propositions.push({
+                letter: letter,
+                country: euCountryData[randomId].name.common,
+                flag: euCountryData[randomId].flags.png,
+                capital: euCountryData[randomId].capital
+            });
+        }
+
+        let answerCountryId = getRandomInt(4);
+
+        if (isFlagQuestion) {
+            question = {
+                entitled: "Which country does this flag belong to ?",
+                flag: propositions[answerCountryId].flag,
+                answerLetter: propositions[answerCountryId].letter,
+            };
+        } else if (!isFlagQuestion) {
+            question = {
+                entitled: propositions[answerCountryId].capital + " is the capital of",
+                answerLetter: propositions[answerCountryId].letter,
+            };
+        }
+
+        question = ({...question, propositions});
+
+        setQuestion(question);
+        setIsPreparingQuestion(false);
+    };
+
+    const checkAnswer = (selectedPropositionLetter) => {
+        setSelectedProposition(selectedPropositionLetter);
+
+        if (selectedPropositionLetter === question.answerLetter) {
+            setPoints(points + 1 );
+            setShowAnswer(true);
+
+        } else {
+            setShowAnswer(true);
+
+        }
+    };
+
+    const getEuCountryData = async () => {
+        try {
+            const response = await fetch("https://restcountries.com/v3.1/subregion/europe?fields=name,flags,capital");
+            if (!response.ok) {
+                throw new Error('This is an HTTP error: The status is' + response.status);
+            }
+            let data = await response.json();
+            setEuCountryData(data);
+            setError(null);
+            return true
+        } catch (e) {
+            setError(e.message);
+            setEuCountryData(null);
+            return false
+        } finally {
+            setIsLoadingData(false);
+        }
+    };
+
+    useEffect(() => {
+        getEuCountryData();
+    },[]);
+
+    useEffect(() => {
+        try {
+            euCountryData && setupQuestion();
+        } catch (e) {
+            setError(e.message);
+        }
+    }, [euCountryData]);
 
     return(
         <MainContainer>
             <P size={"xl"} weight={"700"} family={"primary"} color={theme.font.color.primary}>COUNTRY QUIZ</P>
+
             <QuizContainer>
-                {gameOver ?
+                { error && <P size={"l"} weight={"500"} family={"primary"}>{'There is a problem fetching the post data' + error}</P>}
 
-                    <ResultsLayout>
-                        <UndrawWinners className={"undrawWinners"}/>
-                        <FlexContainer vertical align={"center"}>
-                            <P size={"xxl"} weight={"700"} family={"primary"} color={theme.font.color.tertiary}>Results</P>
-                            <Separator height={"10px"}/>
-                            <P size={"r"} weight={"400"} family={"primary"} color={theme.font.color.tertiary}>
-                                You got
-                                <P size={"xl"} weight={"700"} family={"primary"} color={theme.success}> 4 </P>
-                                correct answers
-                            </P>
-                        </FlexContainer>
+                {isLoadingData ?
+                    <P size={"l"} weight={"500"} family={"primary"}>A moment please...</P> :
 
-                        <Button
-                            onClick={() => setGameOver(!gameOver)}
-                            variant={"outline"}
-                            color={theme.font.color.tertiary}
-                            padding={"18px 61px"}
-                            maxWidth={"215px"}
-                            noShadow>
-                            <P size={"r"} weight={"600"} family={"primary"}>Try Again</P>
-                        </Button>
+                    isPreparingQuestion ?
+                        <P size={"l"} weight={"500"} family={"primary"}>Question is loading ...</P> :
+                        showResults ?
+                            <ResultsLayout>
+                                <UndrawWinners className={"undrawWinners"}/>
+                                <FlexContainer vertical align={"center"}>
+                                    <P size={"xxl"} weight={"700"} family={"primary"}
+                                       color={theme.font.color.tertiary}>Results</P>
+                                    <Separator height={"10px"}/>
+                                    <P size={"r"} weight={"400"} family={"primary"} color={theme.font.color.tertiary}>
+                                        You got
+                                        <P as='span' size={"xl"} weight={"700"} family={"primary"}
+                                           color={theme.success}> {points} </P>
+                                        correct answers
+                                    </P>
+                                </FlexContainer>
 
-                    </ResultsLayout> :
+                                <Button
+                                    onClick={() => setGameOver(!gameOver)}
+                                    variant={"outline"}
+                                    color={theme.font.color.tertiary}
+                                    padding={"18px 61px"}
+                                    maxWidth={"215px"}
+                                    noShadow>
+                                    <P size={"r"} weight={"600"} family={"primary"}>Try Again</P>
+                                </Button>
 
-                    <FlexContainer vertical justify={"space-between"} flexSize={1} padding={"68px 32px 32px"}>
-                        <UndrawAdventure className={"undrawAdventure"}/>
-                        {isFlagQuestion &&
-                            <React.Fragment>
-                                <Placeholder/>
-                                <Separator height={"28px"}/>
-                            </React.Fragment>
+                            </ResultsLayout> :
 
-                        }
-                        < P size={"l"} weight={"700"} family={"primary"} color={theme.font.color.secondary}>Which country does this flag belong to maybe gna sdsf?  </P>
+                            <FlexContainer vertical justify={"space-between"} flexSize={1} padding={"68px 32px 32px"}>
+                                <UndrawAdventure className={"undrawAdventure"}/>
+                                {question.flag &&
+                                    <React.Fragment>
+                                        <Flag src={question.flag} alt={"flag"}/>
+                                        <Separator height={"28px"}/>
+                                    </React.Fragment>}
+                                < P size={"l"} weight={"700"} family={"primary"} color={theme.font.color.secondary}>{question.entitled}</P>
 
-                        <Separator height={"32px"}/>
+                                <Separator height={"32px"}/>
+                                <FlexContainer vertical width={"100%"} gap={"25px"}>
+                                    {question.propositions.map(proposition =>
+                                        <AnswerButton
+                                            key={proposition.letter}
+                                            Letter={proposition.letter}
+                                            Content={proposition.country}
+                                            disabled={showAnswer}
+                                            State={showAnswer ?
+                                                ((question.answerLetter === proposition.letter && "success") ||
+                                                    (selectedProposition === proposition.letter &&
+                                                        (proposition.letter === question.answerLetter ? "success" : "wrong")))
+                                                : null
+                                            }
+                                            onClick={() => checkAnswer(proposition.letter)}
+                                        />
+                                    )}
+                                </FlexContainer>
 
-                        <AnswersLayout>
-                            <AnswerButton Letter={"A"} Content={"Malasia"} State={"success"}/>
-                            <Separator height={"25px"}/>
-                            <AnswerButton Letter={"A"} Content={"Malasia"} State={"wrong"}/>
-                            <Separator height={"25px"}/>
-                            <AnswerButton Letter={"A"} Content={"Malasia"}/>
-                            <Separator height={"25px"}/>
-                            <AnswerButton Letter={"A"} Content={"Malasia"}/>
-                        </AnswersLayout>
-
-                        <Separator height={"24px"}/>
-                        <NextButton onClick={() => setGameOver(!gameOver)}/>
-                    </FlexContainer>
-
+                                <Separator height={"24px"}/>
+                                {showAnswer && <NextButton onClick={() => setupQuestion()}/>}
+                            </FlexContainer>
                 }
             </QuizContainer>
         </MainContainer>
