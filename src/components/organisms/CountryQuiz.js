@@ -132,8 +132,15 @@ const CountryQuiz = () => {
 
         } else {
             setShowAnswer(true);
-
+            setGameOver(true);
         }
+    };
+
+    const resetQuiz = () => {
+        setPoints(0);
+        setGameOver(false);
+        setupQuestion();
+        setShowResults(false);
     };
 
     const getEuCountryData = async () => {
@@ -175,7 +182,9 @@ const CountryQuiz = () => {
                 { error && <P size={"l"} weight={"500"} family={"primary"}>{'There is a problem fetching the post data' + error}</P>}
 
                 {isLoadingData ?
-                    <P size={"l"} weight={"500"} family={"primary"}>A moment please...</P> :
+                    <FlexContainer width={"100%"} flexSize={1} align={"center"} justify={"center"}>
+                        <P size={"l"} weight={"500"} family={"primary"}>A moment please...</P>
+                    </FlexContainer>:
 
                     isPreparingQuestion ?
                         <P size={"l"} weight={"500"} family={"primary"}>Question is loading ...</P> :
@@ -195,7 +204,7 @@ const CountryQuiz = () => {
                                 </FlexContainer>
 
                                 <Button
-                                    onClick={() => setGameOver(!gameOver)}
+                                    onClick={() => resetQuiz()}
                                     variant={"outline"}
                                     color={theme.font.color.tertiary}
                                     padding={"18px 61px"}
@@ -203,7 +212,6 @@ const CountryQuiz = () => {
                                     noShadow>
                                     <P size={"r"} weight={"600"} family={"primary"}>Try Again</P>
                                 </Button>
-
                             </ResultsLayout> :
 
                             <FlexContainer vertical justify={"space-between"} flexSize={1} padding={"68px 32px 32px"}>
@@ -224,10 +232,7 @@ const CountryQuiz = () => {
                                             Content={proposition.country}
                                             disabled={showAnswer}
                                             State={showAnswer ?
-                                                ((question.answerLetter === proposition.letter && "success") ||
-                                                    (selectedProposition === proposition.letter &&
-                                                        (proposition.letter === question.answerLetter ? "success" : "wrong")))
-                                                : null
+                                                ((question.answerLetter === proposition.letter && "success") || (selectedProposition === proposition.letter ? (proposition.letter === question.answerLetter ? "success" : "wrong") : null)) : null
                                             }
                                             onClick={() => checkAnswer(proposition.letter)}
                                         />
@@ -235,7 +240,7 @@ const CountryQuiz = () => {
                                 </FlexContainer>
 
                                 <Separator height={"24px"}/>
-                                {showAnswer && <NextButton onClick={() => setupQuestion()}/>}
+                                {showAnswer && <NextButton onClick={() => gameOver ? setShowResults(true) : setupQuestion()}/>}
                             </FlexContainer>
                 }
             </QuizContainer>
