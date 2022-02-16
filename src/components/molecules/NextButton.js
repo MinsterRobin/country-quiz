@@ -30,5 +30,4 @@ NextButton.propTypes = {
     onClick: PropTypes.func
 };
 
-
 export default NextButton

@@ -13,6 +13,7 @@ import getRandomInt from "../../utils/getRandomInt";
 const MainContainer = styled.div`
     display: flex;
     flex-direction: column;
+    padding-top: 60px;
     margin: 0 auto;
     width: 100%;
     max-width: 600px;
@@ -93,8 +94,13 @@ const CountryQuiz = () => {
                     break;
             }
 
-            let randomId = getRandomInt(52);
+            let randomId = getRandomInt(euCountryData.length);
+            while (propositions.findIndex(e => e.id === randomId) > -1) {
+                randomId = getRandomInt(euCountryData.length);
+            }
+
             propositions.push({
+                id: randomId,
                 letter: letter,
                 country: euCountryData[randomId].name.common,
                 flag: euCountryData[randomId].flags.png,
